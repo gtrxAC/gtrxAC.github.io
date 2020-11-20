@@ -3,18 +3,18 @@
 # Ask where to install
 echo "Press ENTER to download to: ${PWD}"
 echo "A new directory called AssaultCube_v1.2.0.2 will be created there."
-echo "If you want to use a different directory, press Ctrl+C, change to the directory with cd, and ."
-read acinstalldir
-if ["$acinstalldir" = ""]; then acinstalldir=$PWD; fi
+echo "If you want to use a different directory, rerun the install command in that directory."
+read c
 
 # Download
-curl -L https://github.com/assaultcube/AC/releases/download/v1.2.0.2/AssaultCube_v1.2.0.2.tar.bz2 -o ${acinstalldir}/AC.tar.bz2
+curl -L https://github.com/assaultcube/AC/releases/download/v1.2.0.2/AssaultCube_v1.2.0.2.tar.bz2 -o AC.tar.bz2
 
 # Unpack
-tar -xvjf ${acinstalldir}/AC.tar.bz2
+tar -xvjf AC.tar.bz2
+rm AC.tar.bz2
 
 # Allow execution
-acinstalldir=${acinstalldir}/AssaultCube_v1.2.0.2
+acinstalldir=${PWD}/AssaultCube_v1.2.0.2
 cd $acinstalldir
 chmod +x bin_unix/linux_64_client
 chmod +x assaultcube.sh
@@ -29,7 +29,6 @@ read c
 # Create a desktop entry if requested
 if [ "$c" != "n" ]
 then
-	# Download the logo used for the entry
 	appdir=~/.local/share/applications/assaultcube.desktop
 	echo "[Desktop Entry]" > $appdir
 	echo "Version=1.0" >> $appdir
