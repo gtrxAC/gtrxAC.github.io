@@ -1,8 +1,7 @@
 #!/bin/sh
 
-echo "Downloading to: ${PWD}/AssaultCube"
-echo "If you want to use a different folder, press Ctrl + C and change to that folder using cd (folder)."
-sleep 5
+echo "Installing to: ${PWD}"
+sleep 3
 
 # Download
 curl -L https://github.com/assaultcube/AC/releases/download/v1.2.0.2/AssaultCube_v1.2.0.2.tar.bz2 -o AC.tar.bz2
@@ -10,19 +9,34 @@ curl -L https://github.com/assaultcube/AC/releases/download/v1.2.0.2/AssaultCube
 # Unpack
 tar -xvjf AC.tar.bz2
 rm AC.tar.bz2
-mv AssaultCube_v1.2.0.2 AssaultCube
+
+# If directory is empty, put game data in the current folder
+# Otherwise put data in a new directory
+count=0
+for f in *
+do
+	count=$(( $count + 1 ))
+done
+
+if [ $count -eq 1 ]
+then
+	mv AssaultCube_v1.2.0.2/* .
+	rmdir AssaultCube_v1.2.0.2
+	acinstalldir=${PWD}
+else
+	mv AssaultCube_v1.2.0.2 AssaultCube
+	acinstalldir=${PWD}/AssaultCube
+done
 
 # Allow execution
-acinstalldir=${PWD}/AssaultCube
 cd $acinstalldir
 chmod +x bin_unix/linux_64_client
 chmod +x assaultcube.sh
 
 echo ""
-echo ""
 echo "Adding AssaultCube to your applications menu..."
 echo "If you don't want to do this, press Ctrl + C."
-sleep 5
+sleep 3
 
 # Create a desktop entry
 appdir=~/.local/share/applications/assaultcube.desktop
@@ -37,6 +51,5 @@ echo "Path=${acinstalldir}" >> $appdir
 echo "Categories=Game;" >> $appdir
 chmod +x $appdir
 
-echo ""
 echo ""
 echo "Installed successfully!"
