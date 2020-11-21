@@ -33,6 +33,11 @@ cd $acinstalldir
 chmod +x bin_unix/linux_64_client
 chmod +x assaultcube.sh
 
+# Remove useless dirs
+rmdir demos
+rm -rf docs # Docs are available online
+rmdir screenshots
+
 echo ""
 echo "Adding AssaultCube to your applications menu..."
 echo "If you don't want to do this, press Ctrl + C."
