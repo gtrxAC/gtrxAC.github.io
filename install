@@ -33,9 +33,15 @@ cd $acinstalldir
 chmod +x bin_unix/linux_64_client
 chmod +x assaultcube.sh
 
-# Remove useless dirs
-rmdir demos
+# Remove unused dirs/files
+mv docs/images/icon.png packages/misc/desktop_icon.png # Icon is used for the desktop entry
 rm -rf docs # Docs are available online
+rm packages/misc/font.ttf
+rm packages/misc/test.png
+rm packages/misc/nice_medals.png
+rm packages/misc/teams.png
+rm packages/misc/items-tmp.png
+rmdir demos
 rmdir screenshots
 
 echo ""
@@ -51,7 +57,7 @@ echo "Type=Application" >> $appdir
 echo "Name=AssaultCube" >> $appdir
 echo "Comment=Realistic first-person-shooter (${PWD})" >> $appdir
 echo "Exec=${acinstalldir}/assaultcube.sh" >> $appdir
-echo "Icon=${acinstalldir}/docs/images/icon.png" >> $appdir
+echo "Icon=${acinstalldir}/packages/misc/desktop_icon.png" >> $appdir
 echo "Path=${acinstalldir}" >> $appdir
 echo "Categories=Game;" >> $appdir
 chmod +x $appdir
