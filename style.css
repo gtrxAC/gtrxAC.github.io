@@ -1,22 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@700&family=Inter:wght@400;700&display=swap');
 
+:root {
+    --background: black;
+    --background1: #101316;
+    --background2: #20262c;
+    --text: white;
+    --link: #cce;
+}
+
 body {
     margin: 0;
-    background-color: black;
+    background-color: var(--background);
     font-family: sans-serif;
     color: #eee;
 }
-@media screen and (min-width: 1024px) {
-    main {
-        max-width: 1024px;
-        margin: 0 auto;
-    }
-}
 
 main {
-    background-color: #101316;
+    max-width: 800px;
+    background-color: var(--background1);
     padding-top: 1em;
     padding: 1em 2em;
+    margin: 0 auto;
+    font-family: "Inter", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -24,35 +29,29 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.5em;
     font-family: "Inconsolata", monospace;
 }
-h1 {
-    margin-top: 1em;
-    margin-bottom: 0.7em;
-}
 
 a {
-    color: #cce;
+    color: var(--link);
     text-decoration: none;
 }
 a:hover {
-    color: white;
+    color: var(--text);
 }
 
-
 .row {
-    display: flex;
+    display: grid;
     gap: 1em;
     padding-bottom: 1em;
 }
 .section {
-    background-color: #20262b;
+    background-color: var(--background2);
     border-radius: 8px;
     padding: 1em;
-    width: 100%;
 }
 
 #avatar {
     border-radius: 100%;
-    border: solid #101316 5px;
+    border: solid var(--background1) 5px;
 }
 
 ul {
@@ -66,11 +65,30 @@ ul li {
 }
 
 .tag {
-    background-color: white;
-    color: black;
+    background-color: var(--text);
+    color: var(--background);
     border-radius: 8px;
     padding: 2px 6px;
     font-size: 12px;
     font-weight: bold;
     margin: 0 6px;
+}
+
+/* _____________________________________________________________________________
+
+  Responsiveness
+_____________________________________________________________________________ */
+
+@media screen and (max-width: 800px) {
+    .row {
+        display: block;
+    }
+    .section {
+        margin-bottom: 1em; /* vertical gap between sections */
+    }
+}
+@media screen and (max-width: 600px) {
+    main {
+        padding: 1em 0.5em;
+    }
 }
