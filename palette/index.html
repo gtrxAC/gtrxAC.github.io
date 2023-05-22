@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <div>
+            <label for="palsize">Palette size</label>
+            <input type="number" name="palsize" id="palsize" min="1" default="16">
+            <button onclick="newPalette()">Create</button><br>
+            <label for="cols">Columns</label>
+            <input type="number" name="cols" id="cols" min="1" default="4" onchange="updateCols()">
+        </div>
+        <div id="palette">
+        </div>
+    </main>
+</body>
+<script src="script.js"></script>
+</html>

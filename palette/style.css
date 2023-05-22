@@ -1,0 +1,9 @@
+main {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div {
+    border: solid 2px black;
+    padding: 0.5em;
+    width: auto;
+}
