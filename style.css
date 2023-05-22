@@ -18,8 +18,7 @@ body {
 main {
     max-width: 800px;
     background-color: var(--background1);
-    padding-top: 1em;
-    padding: 1em 2em;
+    padding: 2em;
     margin: 0 auto;
     font-family: "Inter", sans-serif;
 }
@@ -49,19 +48,25 @@ a:hover {
     padding: 1em;
 }
 
-.imgsection {
+/* _____________________________________________________________________________
+
+  Image sections (boxes)
+_____________________________________________________________________________ */
+
+.section {
     background-color: var(--background2);
     border-radius: 8px;
     padding: 1em;
     display: flex;
     gap: 1.5em;
 }
-.imgsection img {
+.section img {
     width: 120px;
     height: 120px;
     border-radius: 4px;
+    border: solid var(--background1) 5px;
 }
-.imgsection img::after {
+.section img::after {
     box-shadow: inset 5px 5px black;
     content: '';
     display: block;
@@ -69,6 +74,9 @@ a:hover {
     position: absolute;
     top: 0;
     width: 100%;
+}
+a:has(.section) {
+    color: unset;
 }
 
 #avatar {
@@ -84,16 +92,6 @@ ul {
 ul li {
     padding: 0.2em 0;
     display: flex;
-}
-
-.tag {
-    background-color: var(--text);
-    color: var(--background);
-    border-radius: 8px;
-    padding: 2px 6px;
-    font-size: 12px;
-    font-weight: bold;
-    margin: 0 6px;
 }
 
 /* _____________________________________________________________________________
