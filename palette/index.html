@@ -12,11 +12,17 @@
         <label for="palsize">Palette size</label>
         <input type="number" name="palsize" id="palsize" min="1" value="16">
         <button onclick="newPalette()">Create</button>
+        <button onclick="resizePalette()">Resize</button>
+        <br>
         <button id="undo" onclick="undo()" disabled>Undo</button>
         <button id="redo" onclick="redo()" disabled>Redo</button>
-        <button onclick="exportPalette()">Export (WIP)</button><br>
+        <button onclick="openWindow('gradient')">Gradient</button>
+        <button onclick="exportPalette()">Export (WIP)</button>
+        <br>
         <label for="cols">Columns</label>
         <input type="number" name="cols" id="cols" min="1" value="4" onchange="updateCols()">
+        <label for="zoom">Zoom</label>
+        <input type="number" name="zoom" id="zoom" min="8" max="256" step="8" value="64" onchange="updateCols()">
     </div>
     <div id="palette">
     </div>
@@ -57,7 +63,15 @@
         <input type="color" name="picker" id="picker" onchange="updateColorEditor('picker')">
         <button onclick="randomizeColor()">Randomize</button>
         <button onclick="convert12Bit()">12-bit</button>
-        <button onclick="closeEditor()">Confirm</button>
+        <button onclick="closeWindows()">Confirm</button>
+    </div>
+    <div class="section form" id="gradient" style="display: none;">
+        <label for="gradFrom">Create gradient from</label>
+        <input type="number" name="gradFrom" id="gradFrom">
+        <label for="gradTo">to</label>
+        <input type="number" name="gradTo" id="gradTo">
+        <button onclick="gradient()">OK</button>
+        <button onclick="closeWindows()">Cancel</button>
     </div>
 </body>
 <script src="script.js"></script>

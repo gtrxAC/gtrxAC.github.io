@@ -4,6 +4,7 @@ let pal = [];
 let undoHistory = [];
 let redoHistory = [];
 let hl;  // highlighted palette index
+let gradientMode = false;
 
 function toHex(num) {
     let result = Number(num).toString(16);
@@ -24,7 +25,6 @@ function decodeColor(hex) {
 
 function updateUndoButton() {
     $('undo').disabled = !undoHistory.length;
-    console.log($('undo'), $('undo').disabled, undoHistory, !undoHistory.length)
     $('redo').disabled = !redoHistory.length;
 }
 
@@ -53,8 +53,21 @@ function newPalette() {
     pal = [];
     for (let i = 0; i < palSize; i++) pal[i] = [0, 0, 0];
     updateCols();
-    closeEditor();
+    closeWindows();
     updateUndoButton();
+}
+
+function colorClickEvent(ev, i) {
+    if (gradientMode) {
+        switch (ev.button) {
+            case 0: $('gradFrom').value = i; break;
+            case 2: $('gradTo').value = i; break;
+        }
+    }
+    else {
+        highlight(i);
+    }
+    updateCols();
 }
 
 function updateCols() {
@@ -73,10 +86,24 @@ function updateCols() {
             if (i >= pal.length) continue;
             
             let button = document.createElement('button');
-            button.style.backgroundColor = encodeColor(pal[i]) ?? '#FF0000';
-            button.classList = ['color'];
             button.id = i;
-            button.onclick = () => { highlight(i) }
+            button.classList = ['color'];
+            button.style.width = `${$('zoom').value}px`;
+            button.style.height = `${$('zoom').value}px`;
+            button.style.backgroundColor = encodeColor(pal[i]) ?? '#FF0000';
+
+            button.onmousedown = (ev) => colorClickEvent(ev, i);
+            button.addEventListener('contextmenu', (ev) => {
+                ev.preventDefault();
+            });
+              
+            if (gradientMode) {
+                if ($('gradFrom').value == i) button.classList.add('highlight_a');
+                if ($('gradTo').value == i) button.classList.add('highlight_b');
+            }
+            else {
+                if (i == hl) button.classList.add('highlight_a');
+            }
             div.appendChild(button);
         }
         $('palette').appendChild(div);
@@ -85,12 +112,6 @@ function updateCols() {
 
 function highlight(id) {
     hl = id;
-    console.log(id);
-    for (let i = 0; i < pal.length; i++) {
-        $(i).classList.remove('highlight_a');
-    }
-    $(id).classList.add('highlight_a');
-
     $("editor").style.display = 'block';
     $('red').value = pal[id][0];
     $('green').value = pal[id][1];
@@ -162,6 +183,40 @@ function convert12Bit() {
     updateColorEditor('other');
 }
 
-function closeEditor() {
+function closeWindows() {
+    gradientMode = false;
     $('editor').style.display = 'none';
+    $('gradient').style.display = 'none';
+}
+
+function openWindow(name) {
+    closeWindows();
+    if (name == 'gradient') gradientMode = true;
+    $(name).style.display = 'block';
+}
+
+function gradient() {
+    const startIndex = $('gradFrom').value;
+    const endIndex = $('gradTo').value;
+    // Swap if they are the wrong way around
+    if (startIndex > endIndex) {
+        startIndex, endIndex = endIndex, startIndex;
+    }
+    const length = endIndex - startIndex;
+    if (length < 1) return;
+
+    const start = pal[startIndex];
+    const end = pal[endIndex];
+    
+    for (let i = startIndex; i < endIndex; i++) {
+        let amount = i - startIndex;
+        pal[i] = [
+            Math.round(((length - amount)/length)*start[0] + (amount/length)*end[0]),
+            Math.round(((length - amount)/length)*start[1] + (amount/length)*end[1]),
+            Math.round(((length - amount)/length)*start[2] + (amount/length)*end[2]),
+        ]
+    }
+    addUndoHistory();
+    updateCols();
+    closeWindows();
 }
